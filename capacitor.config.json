@@ -1,0 +1,6 @@
+{
+  "appId": "com.quizearn.app",
+  "appName": "Quiz Earn",
+  "webDir": "www",
+  "android": { "allowMixedContent": false }
+}
