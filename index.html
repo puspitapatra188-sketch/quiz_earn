@@ -5,39 +5,33 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Quiz Earn</title>
 <style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap">
+<meta name="theme-color" content="#07070A">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Poppins:wght@400;500;600;700&display=swap">
 <style>
-/* Layout: pearl app shell, white rounded cards, midnight-violet hero cards with a soft gold glow, 5-tab bottom bar. Gold marks coins and rewards only. */
+/* Quiz Earn Black & Gold: deep matte black, metallic gold primary, champagne secondary, gold-gradient buttons with black text. */
 :root{
-  --bg:#efeef7; --card:#ffffff; --ink:#15132b; --muted:#6a6783; --line:#e2dff0; --tint:#ebe7f9;
-  --brand:#4a2fbd; --brand2:#6b45e6; --on-brand:#ffffff; --good:#168a4a; --good-bg:#dcf3e5; --bad:#c93c3c; --bad-bg:#fbe3e3;
-  --gb1:#1b1850; --gb2:#5a33c8; --ga1:#f7cf68; --ga2:#c98a1b; --on-grad:#ffffff; --on-gold:#2b1c00;
-  --go:#168a43; --on-go:#ffffff; --coin1:#ffd76a; --coin2:#d9971a; --coin-ink:#4a2f00;
-  --gold-line:rgba(201,138,27,.38);
-  --shadow:0 6px 22px rgba(40,28,110,.10);
-  --f:"Poppins",system-ui,-apple-system,"Segoe UI",sans-serif;
+  color-scheme:dark;
+  --bg:#07070A; --card:#111116; --ink:#F5F1E6; --muted:#A8A194; --line:#2a2412; --tint:#1a160b;
+  --brand:#F2C14E; --brand2:#C8971F; --on-brand:#1A1200; --good:#8EE0A0; --good-bg:#12301f; --bad:#FFB4A8; --bad-bg:#3a1a17;
+  --gb1:#17130a; --gb2:#3a2c0a; --ga1:#FFE08A; --ga2:#C8971F; --on-grad:#F5F1E6; --on-gold:#1A1200;
+  --go:#F2C14E; --on-go:#1A1200; --coin1:#FFE08A; --coin2:#C8971F; --coin-ink:#4a3300; --champ:#F7E7CE;
+  --gold-line:rgba(242,193,78,.35);
+  --shadow:0 6px 22px rgba(0,0,0,.55);
+  --f:"Poppins",system-ui,-apple-system,"Segoe UI",sans-serif; --fd:"Cinzel",Georgia,serif;
 }
-@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
-  --bg:#0a0a17; --card:#14132b; --ink:#f1effc; --muted:#9d9ab8; --line:#27244a; --tint:#1f1c42;
-  --brand:#b2a5ff; --brand2:#8f7dff; --on-brand:#120c33; --good:#58d98d; --good-bg:#153a28; --bad:#ff8080; --bad-bg:#3f1a1e;
-  --gold-line:rgba(247,207,104,.30); --shadow:0 6px 22px rgba(0,0,0,.4); color-scheme:dark}}
-:root[data-theme="dark"]{
-  --bg:#0a0a17; --card:#14132b; --ink:#f1effc; --muted:#9d9ab8; --line:#27244a; --tint:#1f1c42;
-  --brand:#b2a5ff; --brand2:#8f7dff; --on-brand:#120c33; --good:#58d98d; --good-bg:#153a28; --bad:#ff8080; --bad-bg:#3f1a1e;
-  --gold-line:rgba(247,207,104,.30); --shadow:0 6px 22px rgba(0,0,0,.4); color-scheme:dark}
 *{box-sizing:border-box}
-body{background:var(--bg);color:var(--ink);font-family:var(--f);font-size:14px;line-height:1.45;
+body{background:radial-gradient(120% 38% at 85% -4%,#2a2108 0%,var(--bg) 58%) no-repeat,var(--bg);color:var(--ink);font-family:var(--f);font-size:14px;line-height:1.45;
   padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0 100px}
 .shell{max-width:480px;margin:0 auto}
 .page{display:flex;flex-direction:column;gap:16px;padding-top:14px}
 h1,h2,h3,p{margin:0}
-h1{font-size:22px;font-weight:700;line-height:1.2}
+h1{font-family:var(--fd);font-size:22px;font-weight:700;line-height:1.2;letter-spacing:.04em}
 h2{font-size:20px;font-weight:700}
 h3{font-size:16px;font-weight:600}
 button{font:inherit;color:inherit;cursor:pointer;border:0;background:none}
 button:focus-visible,input:focus-visible{outline:3px solid var(--brand);outline-offset:2px}
 .muted{color:var(--muted)} .tnum{font-variant-numeric:tabular-nums}
-.card{background:var(--card);border-radius:22px;padding:16px;box-shadow:var(--shadow);display:flex;flex-direction:column;gap:12px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:16px;box-shadow:var(--shadow);display:flex;flex-direction:column;gap:12px}
 .row{display:flex;align-items:center;gap:12px;min-width:0}
 .row>.grow{flex:1;min-width:0}
 .between{justify-content:space-between}
@@ -52,7 +46,7 @@ button:focus-visible,input:focus-visible{outline:3px solid var(--brand);outline-
 .gbtn{width:52px;height:46px;border-radius:16px;background:linear-gradient(135deg,var(--ga1),var(--ga2));color:var(--on-gold);display:grid;place-items:center;flex:none}
 .pillbtn{background:var(--card);border-radius:999px;padding:10px 16px;font-weight:600;display:inline-flex;gap:8px;align-items:center;box-shadow:var(--shadow);white-space:nowrap}
 .balcard{background:linear-gradient(135deg,var(--tint),var(--card));box-shadow:inset 0 0 0 1px var(--gold-line);border-radius:22px;padding:16px;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
-.balcard .num{font-size:30px;font-weight:700;line-height:1.1}
+.balcard .num{font-family:var(--fd);color:var(--brand);font-size:30px;font-weight:700;line-height:1.1}
 .grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 .grid2>*{min-width:0}
 .mini{background:var(--card);border-radius:20px;padding:14px;box-shadow:var(--shadow);display:flex;flex-direction:column;gap:8px;text-align:left;width:100%}
@@ -66,15 +60,16 @@ button:focus-visible,input:focus-visible{outline:3px solid var(--brand);outline-
 .offer.a .tag{background:rgba(43,28,0,.14)}
 .offer .tag{align-self:flex-start;background:rgba(255,255,255,.22);border-radius:10px;padding:3px 10px;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase}
 .offer small{opacity:.85}
-.offer .big{font-size:30px;font-weight:700;line-height:1.1}
-.offer .go{align-self:flex-start;margin-top:6px;border-radius:999px;padding:9px 16px;font-weight:700;background:#fff;color:#2c3aa8;display:inline-flex;gap:6px;align-items:center}
+.offer .big{font-family:var(--fd);font-size:30px;font-weight:700;line-height:1.1}
+.offer .go{align-self:flex-start;margin-top:6px;border-radius:999px;padding:11px 18px;min-height:44px;font-weight:700;background:linear-gradient(135deg,var(--ga1),var(--ga2));color:var(--on-gold);display:inline-flex;gap:6px;align-items:center}
 .offer.a .go{background:var(--on-gold);color:var(--ga1)}
+.offer.b{border:1px solid var(--gold-line)}
 .offer .go:disabled{opacity:.6;cursor:not-allowed}
 .brain{display:flex;align-items:center;gap:14px;background:linear-gradient(135deg,var(--tint),var(--card));border-radius:22px;padding:16px;width:100%;text-align:left;box-shadow:var(--shadow)}
 .brain .tile{background:linear-gradient(135deg,var(--brand),var(--brand2));color:var(--on-brand);width:56px;height:56px;border-radius:16px}
 .hero{background:radial-gradient(120% 90% at 100% 0%,rgba(255,215,106,.24),transparent 55%),linear-gradient(135deg,var(--gb1),var(--gb2));box-shadow:0 10px 26px rgba(40,24,120,.30);color:var(--on-grad);border-radius:22px;padding:16px;display:flex;align-items:center;gap:14px}
 .hero .tile{background:rgba(255,255,255,.2);color:#fff;width:56px;height:56px}
-.hero .num{font-size:32px;font-weight:700;line-height:1.1}
+.hero .num{font-family:var(--fd);color:var(--ga1);font-size:32px;font-weight:700;line-height:1.1}
 .hero .rbtn{margin-left:auto;width:52px;height:52px;border-radius:16px;background:rgba(255,255,255,.2);color:#fff;display:grid;place-items:center}
 .link{background:var(--card);border-radius:20px;padding:14px 16px;box-shadow:var(--shadow);display:flex;align-items:center;gap:14px;width:100%;text-align:left}
 .flag{width:26px;height:18px;border-radius:3px;background:linear-gradient(#ff9933 33%,#fff 33% 66%,#138808 66%);box-shadow:0 0 0 1px var(--line)}
@@ -98,7 +93,7 @@ button:focus-visible,input:focus-visible{outline:3px solid var(--brand);outline-
 .pill.pend{background:#ffe7a8;color:#5a3500}
 .q{font-size:20px;font-weight:600;line-height:1.3;text-wrap:balance}
 .opts{display:flex;flex-direction:column;gap:8px}
-.opt{text-align:left;background:var(--bg);border:2px solid transparent;border-radius:14px;padding:13px 14px;font-weight:500}
+.opt{text-align:left;min-height:48px;background:var(--bg);border:2px solid transparent;border-radius:14px;padding:13px 14px;font-weight:500}
 .opt:hover:not(:disabled){border-color:var(--brand)}
 .opt.ok{border-color:var(--good);background:var(--good-bg)}
 .opt.no{border-color:var(--bad);background:var(--bad-bg)}
@@ -116,7 +111,7 @@ input{font:inherit;background:var(--bg);color:var(--ink);border:2px solid transp
 .rank{width:30px;height:30px;border-radius:50%;background:var(--tint);display:grid;place-items:center;font-weight:700;font-size:13px;flex:none}
 .me{background:var(--tint);border-radius:14px;padding-inline:10px;margin-inline:-10px}
 .code{font-size:26px;font-weight:700;letter-spacing:.12em;text-align:center;background:var(--bg);border:2px dashed var(--brand);border-radius:16px;padding:16px;overflow-wrap:anywhere}
-.nav{position:fixed;left:0;right:0;bottom:0;z-index:6;background:var(--card);box-shadow:0 -4px 18px rgba(40,28,110,.10);
+.nav{position:fixed;left:0;right:0;bottom:0;z-index:6;background:var(--card);border-top:1px solid var(--gold-line);box-shadow:0 -4px 18px rgba(0,0,0,.6);
   padding:8px max(8px,env(safe-area-inset-right,0px)) calc(8px + env(safe-area-inset-bottom,0px)) max(8px,env(safe-area-inset-left,0px))}
 .nav>div{max-width:480px;margin:0 auto;display:grid;grid-template-columns:repeat(5,1fr);gap:2px}
 .tab{display:flex;flex-direction:column;align-items:center;gap:2px;font-size:11px;font-weight:600;color:var(--muted);padding:2px 0;position:relative}
@@ -124,10 +119,10 @@ input{font:inherit;background:var(--bg);color:var(--ink);border:2px solid transp
 .tab[aria-current="true"]{color:var(--brand)}
 .tab[aria-current="true"] span{background:var(--tint)}
 .dot{position:absolute;top:0;right:calc(50% - 22px);width:9px;height:9px;border-radius:50%;background:#ef4444}
-.scrim{position:fixed;inset:0;z-index:20;background:rgba(8,10,30,.62);display:flex;justify-content:center;align-items:flex-end}
+.scrim{position:fixed;inset:0;z-index:20;background:rgba(0,0,0,.78);display:flex;justify-content:center;align-items:flex-end}
 .scrim.mid{align-items:center;padding:16px}
-.sheet{background:var(--card);width:100%;max-width:480px;border-radius:24px 24px 0 0;padding:18px 16px calc(18px + env(safe-area-inset-bottom,0px));max-height:92%;overflow:auto;display:flex;flex-direction:column;gap:14px}
-.adbox{background:var(--card);border-radius:22px;max-width:400px;width:100%;padding:18px;display:flex;flex-direction:column;gap:12px}
+.sheet{background:var(--card);border-top:1px solid var(--gold-line);width:100%;max-width:480px;border-radius:24px 24px 0 0;padding:18px 16px calc(18px + env(safe-area-inset-bottom,0px));max-height:92%;overflow:auto;display:flex;flex-direction:column;gap:14px}
+.adbox{background:var(--card);border:1px solid var(--gold-line);border-radius:22px;max-width:400px;width:100%;padding:18px;display:flex;flex-direction:column;gap:12px}
 .adscreen{aspect-ratio:16/9;max-width:100%;border-radius:14px;background:repeating-linear-gradient(45deg,var(--tint),var(--tint) 14px,var(--bg) 14px,var(--bg) 28px);display:grid;place-items:center;text-align:center;padding:10px;font-weight:600;color:var(--muted)}
 .xbtn{width:36px;height:36px;border-radius:12px;background:var(--tint);display:grid;place-items:center}
 .toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(92px + env(safe-area-inset-bottom,0px));z-index:30;background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:99px;font-weight:600;max-width:90vw;text-align:center}
@@ -141,14 +136,24 @@ input{font:inherit;background:var(--bg);color:var(--ink);border:2px solid transp
 .optn{background:var(--card);border:2px solid var(--line);border-radius:999px;padding:14px;font-size:20px;font-weight:700;letter-spacing:.06em;font-variant-numeric:tabular-nums}
 .optn:hover{border-color:var(--brand)}
 .btn.green{background:var(--go);color:var(--on-go);display:flex;align-items:center;justify-content:center;gap:8px}
-.trophy{width:150px;height:150px;border-radius:50%;background:linear-gradient(135deg,var(--ga1),var(--ga2));color:var(--on-gold);display:grid;place-items:center;margin:8px auto 0}
+.trophy{width:150px;height:150px;border-radius:50%;background:linear-gradient(135deg,var(--ga1),var(--ga2));color:var(--on-gold);display:grid;place-items:center;margin:8px auto 0;box-shadow:0 0 40px rgba(242,193,78,.35);animation:pop .7s cubic-bezier(.2,.9,.3,1.2) both}
+@keyframes pop{0%{transform:scale(.3) rotate(-15deg);opacity:0}100%{transform:scale(1) rotate(0);opacity:1}}
+@keyframes shine{0%{background-position:-200% 0}100%{background-position:200% 0}}
+.balcard,.hero{position:relative;overflow:hidden}
+.balcard::after,.hero::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(110deg,transparent 35%,rgba(255,224,138,.10) 50%,transparent 65%);background-size:200% 100%;animation:shine 6s linear infinite}
+.page{animation:fadein .25s ease-out}
+@keyframes fadein{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.demobar{background:#221b0a;color:var(--champ);border:1px solid var(--gold-line);border-radius:12px;padding:8px 12px;font-size:12px;text-align:center;letter-spacing:.02em}
+.demobar b{color:var(--brand)}
+.ffcard{display:flex;align-items:center;gap:14px;width:100%;text-align:left;padding:16px;border-radius:6px 26px 6px 26px;background:linear-gradient(135deg,#1c1609,#0d0d11);border:1px solid var(--gold-line);box-shadow:var(--shadow)}
+.ffcard .tile{background:linear-gradient(135deg,var(--ga1),var(--ga2));color:var(--on-gold);width:56px;height:56px;border-radius:16px}
 .tick{position:absolute;top:0;font-size:12px;color:var(--muted);transform:translateX(-50%)}
-.btn.red{background:#dc2626;color:#fff}
-.warnbox{background:#fff3d6;color:#4a3300;border-radius:16px;padding:14px;font-size:14px}
-.warnbox b{color:#8a4b00}
+.btn.red{background:var(--tint);color:var(--brand);border:1px solid var(--gold-line)}
+.warnbox{background:#221b0a;color:var(--champ);border:1px solid var(--gold-line);border-radius:16px;padding:14px;font-size:14px}
+.warnbox b{color:var(--brand)}
 .warnbox ul{margin:6px 0 0;padding-left:18px}
 .appc{text-align:left;width:100%}
-@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 </style>
 
 </head>
@@ -163,7 +168,10 @@ input{font:inherit;background:var(--bg);color:var(--ink);border:2px solid transp
 <script>
 (function(){
 var KEY="quizearn.v2";
-var AD_SECS=30, Q_LEN=5, Q_TIME=15, Q_COINS=10, Q_PERFECT=20, REFER=300, GEMS_NEEDED=30, CAP_NEED=2, CAP_TRIES=3;
+var AD_SECS=30, Q_LEN=5, Q_TIME=15, Q_COINS=10, Q_PERFECT=20, REFER=300, GEMS_NEEDED=20, CAP_NEED=2, CAP_TRIES=3, FF_COINS=100;
+// DEMO = true: every coin is a local test coin (stored only on this phone, not verified by a server) and the simulate buttons are shown.
+// A real release needs a server + offer partner to verify rewards. Do not ship with DEMO=true as a paid-rewards app.
+var DEMO=true;
 var OFFERS={super:{n:"Super Offer",coins:850,tasks:7},mega:{n:"Mega Offer",coins:450,tasks:4}};
 var QS=[
 ["Bharat ki rajdhani kaunsi hai?",["Mumbai","New Delhi","Kolkata","Chennai"],1],
@@ -187,6 +195,19 @@ var QS=[
 ["Chand dharti ka kya hai?",["Grah","Tara","Upgrah","Dumketu"],2],
 ["Cricket mein ek over mein kitni legal balls hoti hain?",["4","5","6","8"],2]
 ];
+// Free Fire Quiz: [question, options, index of correct answer]. Please re-check these before release.
+var FFQ=[
+["Which company publishes Free Fire?",["Garena","Tencent","Supercell","Epic Games"],0],
+["What type of game is Free Fire?",["Racing","Puzzle","Battle royale","Farming"],2],
+["How many players are in one squad in Squad mode?",["2","4","6","8"],1],
+["Which of these is a Free Fire map?",["Bermuda","Erangel","Sanhok","Pochinki"],0],
+["What message appears when your team wins a match?",["Checkmate!","Booyah!","Jackpot!","Level up!"],1],
+["Which real-life DJ inspired the Free Fire character Alok?",["Martin Garrix","DJ Alok","Avicii","Marshmello"],1],
+["Which of these is a Free Fire character?",["Kelly","Jett","Sage","Pharah"],0],
+["What is the enhanced-graphics version of Free Fire called?",["Free Fire MAX","Free Fire Pro","Free Fire Ultra","Free Fire Plus"],0],
+["What is the premium in-game currency in Free Fire?",["Rubies","Emeralds","Diamonds","Credits"],2],
+["How many players start a Classic Battle Royale match?",["10","25","50","100"],2]
+];
 // val = rupees (or UC) you get for the minimum coins
 var MM=[
  {k:"gplay",n:"Google Play",min:1200,val:10,kind:"email",ic:"gift"},
@@ -199,7 +220,7 @@ var MM=[
  {k:"bank",n:"Bank transfer",min:6500,val:50,kind:"bank",ic:"bank"}
 ];
 var MAP={};MM.forEach(function(m){MAP[m.k]=m});
-var BOARD=[["Aarav S.",48210],["Priya K.",41930],["Rohan M.",37455],["Neha T.",29880],["Imran A.",22340],["Kavya R.",18120],["Dev P.",12905]];
+var BOARD=[]; // sample players removed: a real leaderboard needs a server
 
 var P={
  home:'<path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/>',
@@ -233,14 +254,15 @@ function today(){return new Date().toISOString().slice(0,10)}
 function rc(n){var c="ABCDEFGHJKLMNPQRSTUVWXYZ23456789",o="";for(var i=0;i<n;i++)o+=c[Math.floor(Math.random()*c.length)];return o}
 function fmt(n){return n.toLocaleString("en-IN")}
 
-function fresh(){return{coins:1500,earned:1500,name:"Player",ref:"QE"+rc(6),played:0,correct:0,hist:[{t:Date.now(),label:"Welcome bonus (demo)",coins:1500}],wd:[],day:null,gems:{super:0,mega:0},done:0,apps:[],appSeq:0}}
-function load(){var s=null;try{s=JSON.parse(localStorage.getItem(KEY)||"null")}catch(e){}if(s&&typeof s.coins==="number"){if(!s.gems)s.gems={super:0,mega:0};s.done=s.done||0;if(!s.apps)s.apps=[];s.appSeq=s.appSeq||0;return s}return fresh()}
+function fresh(){return{coins:0,earned:0,name:"Player",ref:"QE"+rc(6),played:0,correct:0,hist:[],wd:[],day:null,gems:{super:0,mega:0},done:0,apps:[],appSeq:0,ff:false,v3:true}}
+function load(){var s=null;try{s=JSON.parse(localStorage.getItem(KEY)||"null")}catch(e){}if(s&&typeof s.coins==="number"){if(!s.gems)s.gems={super:0,mega:0};s.ff=!!s.ff;if(!s.v3){s.v3=true;var wb=s.hist.filter(function(h){return h.label==="Welcome bonus (demo)"});if(wb.length){s.hist=s.hist.filter(function(h){return h.label!=="Welcome bonus (demo)"});s.coins=Math.max(0,s.coins-1500);s.earned=Math.max(0,s.earned-1500)}}s.done=s.done||0;if(!s.apps)s.apps=[];s.appSeq=s.appSeq||0;return s}return fresh()}
 var S=load();
 function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
 function day(){if(!S.day||S.day.date!==today())S.day={date:today(),ads:0,rounds:0,perfect:false,mega:0,sup:false,win:false,claimed:{}};return S.day}
 function add(c,label){S.coins+=c;if(c>0)S.earned+=c;S.hist.unshift({t:Date.now(),label:label,coins:c});S.hist=S.hist.slice(0,40);save()}
 
 var page="home", sub=null, Q=null, C=null, timer=null, R={k:null,mult:1,f:{},err:"",done:null}, PF={name:S.name,confirm:false};
+function demoBar(){return DEMO?'<div class="demobar"><b>DEMO MODE</b> · test coins only, not verified, cannot be withdrawn for real money</div>':""}
 function toast(m){var t=document.getElementById("toast");t.textContent=m;t.hidden=false;clearTimeout(toast.h);toast.h=setTimeout(function(){t.hidden=true},2200)}
 function stopTimer(){if(timer){clearInterval(timer);timer=null}}
 
@@ -283,7 +305,7 @@ function showAd(label,btn,done){
 /* ---------- Pages ---------- */
 function pHome(){
   var d=day(),gs=S.gems.super,gm=S.gems.mega;
-  return '<div class="page">'+
+  return '<div class="page">'+demoBar()+
   '<header class="hhead"><div class="who"><div class="avatar">'+ic("trophy",26)+'</div><h1>Hi, '+esc(S.name)+'!</h1></div>'+
     '<button class="gbtn" data-a="daily" aria-label="Daily Win">'+ic("gift",24)+'</button></header>'+
   '<section class="balcard">'+'<span class="tile" style="width:64px;height:64px;border-radius:18px;background:var(--card)">'+coin(40)+'</span>'+
@@ -296,8 +318,8 @@ function pHome(){
   '<div class="grid2">'+
     '<section class="offer b"><span class="tag">'+ic("sparkle",12)+' Super offer</span><small>Complete '+GEMS_NEEDED+' gems ('+gs+'/'+GEMS_NEEDED+')</small><div class="big tnum">'+fmt(OFFERS.super.coins)+'</div><small>Coins</small>'+
       '<button class="go" data-a="offer" data-k="super">'+(gs>0?"Continue":"Claim")+' '+ic("chev",16)+'</button></section>'+
-    '<section class="offer a"><span class="tag">'+ic("sparkle",12)+' Mega offer</span><small>Complete '+GEMS_NEEDED+' gems ('+gm+'/'+GEMS_NEEDED+')</small><div class="big tnum">'+fmt(OFFERS.mega.coins)+'</div><small>Coins</small>'+
-      '<button class="go" data-a="offer" data-k="mega">'+(gm>0?"Continue":"Claim Now")+' '+ic("chev",16)+'</button></section>'+
+    '<section class="offer a"><span class="tag">'+ic("game",12)+' Free Fire Quiz</span><small>'+(S.ff?"Reward collected":FFQ.length+" questions · answer all correctly")+'</small><div class="big tnum">'+fmt(FF_COINS)+'</div><small>Coins</small>'+
+      '<button class="go" data-a="ffquiz">'+(S.ff?"Play again":"Play Now")+' '+ic("chev",16)+'</button></section>'+
   '</div>'+
   '<div class="grid2">'+
     '<button class="mini" data-a="tab" data-k="tasks"><div class="row"><span class="tile sm">'+ic("tasks",20)+'</span><b>Tasks</b></div><span class="sub">'+coin(18)+' Daily tasks</span></button>'+
@@ -311,7 +333,7 @@ function pHome(){
 function pWallet(){
   var tiles=MM.map(function(m){
     return '<button class="method" data-a="method" data-k="'+m.k+'"><span class="tile">'+ic(m.ic,26)+'</span><b>'+esc(m.n)+'</b><small>Min: '+fmt(m.min)+'</small></button>'}).join("");
-  return '<div class="page">'+
+  return '<div class="page">'+demoBar()+
   '<header class="hhead"><div><h1>Your Balance</h1><span class="muted">Manage your earnings</span></div>'+
     '<div class="row"><span class="inpill"><span class="flag"></span>IN</span><span class="tile" style="width:52px;height:52px">'+ic("wallet",24)+'</span></div></header>'+
   '<section class="hero"><span class="tile">'+coin(36)+'</span><div><span style="opacity:.9">Your Coins</span><div class="num tnum">'+fmt(S.coins)+'</div></div><button class="rbtn" data-a="refresh" aria-label="Refresh">'+ic("refresh",24)+'</button></section>'+
@@ -351,8 +373,8 @@ function pComm(){
   list.sort(function(a,b){return b.s-a.s});
   var rows=list.map(function(p,i){
     return '<div class="item '+(p.me?"me":"")+'"><div class="row"><span class="rank">'+(i+1)+'</span><b>'+esc(p.n)+(p.me?" (You)":"")+'</b></div><span class="row tnum" style="gap:6px">'+coin(18)+fmt(p.s)+'</span></div>'}).join("");
-  return '<div class="page"><header><h1>Community</h1><span class="muted">Top earners</span></header>'+
-    '<section class="card">'+rows+'</section><div class="note">Sample players. A live leaderboard needs a server.</div></div>';
+  return '<div class="page"><header><h1>Community</h1><span class="muted">Your stats</span></header>'+
+    '<section class="card">'+rows+'</section><div class="note">No other players are shown. A live leaderboard needs a server, so it is not available yet.</div></div>';
 }
 
 function pProfile(){
@@ -363,7 +385,7 @@ function pProfile(){
   '<div class="grid2"><div class="card"><span class="muted">Total earned</span><h2 class="tnum">'+fmt(S.earned)+'</h2></div><div class="card"><span class="muted">Correct answers</span><h2 class="tnum">'+S.correct+' / '+S.played+'</h2></div></div>'+
   '<section class="card"><h3>Recent activity</h3><div>'+hist+'</div></section>'+
   '<section class="card"><h3>Reset demo data</h3><p class="muted">Clears coins, history and withdrawals on this device.</p>'+
-   (PF.confirm?'<div class="row"><button class="btn" style="background:var(--bad);color:#fff" data-a="resetyes">Yes, reset</button><button class="btn alt" data-a="resetno">Cancel</button></div>':'<button class="btn alt" data-a="resetask">Reset</button>')+'</section></div>';
+   (PF.confirm?'<div class="row"><button class="btn" style="background:var(--bad);color:#2a0a05" data-a="resetyes">Yes, reset</button><button class="btn alt" data-a="resetno">Cancel</button></div>':'<button class="btn alt" data-a="resetask">Reset</button>')+'</section></div>';
 }
 
 function subHead(t,s){return '<header class="row"><button class="xbtn" data-a="back" aria-label="Back">'+ic("back",20)+'</button><div><h1>'+t+'</h1>'+(s?'<span class="muted">'+s+'</span>':"")+'</div></header>'}
@@ -380,13 +402,13 @@ function sRefer(){
   '<div class="note">Demo mode: friend sign-ups cannot be tracked without a server, so no referral coins are added yet.</div></section></div>';
 }
 function capHead(){
-  return '<header class="row between"><div class="row"><button class="xbtn" data-a="back" aria-label="Back">'+ic("back",20)+'</button><h1>Quiz</h1></div>'+
+  return '<header class="row between"><div class="row"><button class="xbtn" data-a="back" aria-label="Back">'+ic("back",20)+'</button><h1>Number Match</h1></div>'+
     '<div class="row" style="gap:8px"><button class="inpill" data-a="offers" title="My Offers">'+ic("gift",18)+'<b class="tnum">'+pending()+'</b></button>'+
     '<span class="inpill" title="Gems">'+ic("gem",18)+'<b class="tnum">'+S.gems[C.offer]+'</b></span></div></header>';
 }
 function capProgress(){
   var o=OFFERS[C.offer],g=S.gems[C.offer],pct=Math.min(100,g/GEMS_NEEDED*100);
-  var ticks=[5,10,15,20,25].map(function(n){return '<span class="tick tnum" style="left:'+(n/GEMS_NEEDED*100)+'%">'+n+'</span>'}).join("");
+  var ticks=[5,10,15].map(function(n){return '<span class="tick tnum" style="left:'+(n/GEMS_NEEDED*100)+'%">'+n+'</span>'}).join("");
   return '<section class="card" style="gap:8px"><div class="row between"><span class="muted">'+o.n+'</span><b class="tnum" style="color:var(--brand)">'+g+'/'+GEMS_NEEDED+' '+ic("gem",16)+'</b></div>'+
     '<div class="bar" style="height:20px"><i style="width:'+pct+'%"></i></div>'+
     '<div style="position:relative;height:20px">'+ticks+'<span class="tick" style="left:100%;transform:translateX(-100%)">'+ic("gift",16)+'</span></div>'+
@@ -418,19 +440,22 @@ function sCap(){
 function sQuiz(){
   if(!Q)return"";
   if(Q.done){
-    var base=Q.correct*Q_COINS+(Q.correct===Q_LEN?Q_PERFECT:0);
-    return '<div class="page"><section class="card"><h2>'+Q.correct+' / '+Q_LEN+' correct</h2>'+
-      '<p>You earned <b>'+base+' coins</b>.'+(Q.correct===Q_LEN?" Perfect round!":"")+'</p>'+
+    if(Q.mode==="ff")return '<div class="page">'+demoBar()+'<section class="card"><h2>Quiz complete</h2><p>All '+Q.n+' questions cleared'+(Q.wrong?' after '+Q.wrong+' retr'+(Q.wrong===1?'y':'ies'):' with no mistakes')+'.</p>'+
+      (Q.reward?'<p>You earned <b>'+fmt(Q.reward)+' demo coins</b>.</p>':'<p>'+esc(Q.note)+'</p>')+
+      '<button class="btn" data-a="ffquiz">Play again</button><button class="btn alt" data-a="back">Back home</button></section></div>';
+    return '<div class="page"><section class="card"><h2>'+Q.correct+' / '+Q.n+' correct</h2>'+
+      '<p>You earned <b>'+Q.reward+' coins</b>.'+(Q.correct===Q.n?" Perfect round!":"")+'</p>'+
       '<button class="btn" data-a="qagain">Play again (watch ad)</button><button class="btn alt" data-a="back">Back home</button></section></div>';
   }
   var q=Q.list[Q.i],pct=Math.max(0,Q.left/Q_TIME*100);
-  var opts=q[1].map(function(o,k){var c="opt";if(Q.locked){if(k===q[2])c+=" ok";else if(k===Q.sel)c+=" no"}
+  var opts=q[1].map(function(o,k){var c="opt";if(Q.locked){var hit=Q.sel===q[2];if(k===q[2]&&(hit||Q.mode!=="ff"))c+=" ok";else if(k===Q.sel&&!hit)c+=" no"}
     return '<button class="'+c+'" data-a="ans" data-k="'+k+'" '+(Q.locked?"disabled":"")+'>'+esc(o)+'</button>'}).join("");
-  return '<div class="page">'+subHead("Brain Buster","Question "+(Q.i+1)+" of "+Q_LEN)+
-    '<section class="card"><div class="row between"><span class="pill">+'+Q_COINS+' coins</span><b class="tnum" id="tl">'+Math.ceil(Q.left)+'s</b></div>'+
+  return '<div class="page">'+subHead(Q.mode==="ff"?"Free Fire Quiz":"Brain Buster",Q.mode==="ff"?"Cleared "+Q.cleared+" of "+Q.n+(Q.i>=Q.n?" · retry":""):"Question "+(Q.i+1)+" of "+Q.n)+
+    '<section class="card"><div class="row between"><span class="pill">'+(Q.mode==="ff"?"Cleared "+Q.cleared+"/"+Q.n:"+"+Q_COINS+" coins")+'</span><b class="tnum" id="tl">'+Math.ceil(Q.left)+'s</b></div>'+
     '<div class="bar'+(Q.left<5?" warn":"")+'"><i id="tb" style="width:'+pct+'%"></i></div>'+
     '<p class="q">'+esc(q[0])+'</p><div class="opts">'+opts+'</div>'+
-    (Q.locked?'<button class="btn" data-a="qnext">'+(Q.i+1<Q_LEN?"Next question":"See result")+'</button>':"")+'</section></div>';
+    (Q.locked&&Q.mode==="ff"&&Q.sel!==q[2]?'<p class="note" role="status">Wrong. This question will come again at the end.</p>':"")+
+    (Q.locked?'<button class="btn" data-a="qnext">'+(Q.i+1<Q.list.length?(Q.mode==="ff"?"Next (ad plays)":"Next question"):(Q.mode==="ff"?"See result (ad plays)":"See result"))+'</button>':"")+'</section></div>';
 }
 
 /* ---------- Withdrawal sheet ---------- */
@@ -481,9 +506,10 @@ function wdSubmit(){
 }
 
 /* ---------- Quiz ---------- */
-function qStart(){
-  var pool=QS.slice().sort(function(){return Math.random()-.5}).slice(0,Q_LEN);
-  Q={list:pool,i:0,correct:0,locked:false,sel:-1,left:Q_TIME,done:false};
+function qStart(mode){
+  var src=mode==="ff"?FFQ:QS;
+  var pool=src.slice().sort(function(){return Math.random()-.5}).slice(0,mode==="ff"?FFQ.length:Q_LEN);
+  Q={mode:mode==="ff"?"ff":"bb",n:pool.length,cleared:0,wrong:0,list:pool,i:0,correct:0,locked:false,sel:-1,left:Q_TIME,done:false,reward:0,note:""};
   sub="quiz";runTimer();render();window.scrollTo(0,0);
 }
 function runTimer(){
@@ -500,20 +526,36 @@ function runTimer(){
 function answer(k){
   if(!Q||Q.locked)return;
   Q.locked=true;Q.sel=k;stopTimer();S.played++;
-  if(k===Q.list[Q.i][2]){Q.correct++;S.correct++}
+  if(k===Q.list[Q.i][2]){Q.correct++;Q.cleared++;S.correct++}
+  else if(Q.mode==="ff"){Q.wrong++;Q.list.push(Q.list[Q.i])} // wrong or timed out: this question must be answered again
   save();render();
 }
 function qNext(){
-  if(Q.i+1<Q_LEN){Q.i++;Q.locked=false;Q.sel=-1;Q.left=Q_TIME;runTimer();render()}
+  if(Q.mode==="ff"){
+    // one ad after every Free Fire question; the quiz only moves on after the ad is finished
+    var last=Q.i+1>=Q.list.length;
+    showAd("Free Fire quiz · "+Q.cleared+" of "+Q.n+" cleared",last?"See result":"Next question",qAdvance);
+    return;
+  }
+  qAdvance();
+}
+function qAdvance(){
+  if(Q.i+1<Q.list.length){Q.i++;Q.locked=false;Q.sel=-1;Q.left=Q_TIME;runTimer();render()}
   else{
     Q.done=true;stopTimer();
-    var base=Q.correct*Q_COINS+(Q.correct===Q_LEN?Q_PERFECT:0),d=day();
-    d.rounds++;if(Q.correct===Q_LEN)d.perfect=true;
-    if(base>0)add(base,"Brain Buster "+Q.correct+"/"+Q_LEN);else save();
+    if(Q.mode==="ff"){
+      // reward for completing all questions, once per account
+      if(!S.ff){S.ff=true;Q.reward=FF_COINS;add(FF_COINS,"Free Fire Quiz completed ("+Q.wrong+" retries)")}
+      else{save();Q.note="You already collected the Free Fire reward. Playing again earns no more coins."}
+    }else{
+      var base=Q.correct*Q_COINS+(Q.correct===Q.n?Q_PERFECT:0),d=day();
+      d.rounds++;if(Q.correct===Q.n)d.perfect=true;Q.reward=base;
+      if(base>0)add(base,"Brain Buster "+Q.correct+"/"+Q.n);else save();
+    }
     render();
   }
 }
-function brain(){showAd("Brain Buster","Start playing",qStart)}
+function brain(){showAd("Brain Buster","Start playing",function(){qStart("bb")})}
 
 /* ---------- Offers ---------- */
 function dailyWin(){
@@ -584,12 +626,12 @@ function appCard(o){
 }
 function sOffers(){
   var pend=S.apps.filter(function(a){return!a.claimed}),comp=S.apps.filter(function(a){return a.claimed});
-  return '<div class="page">'+subHead("My Offers",pend.length+" active pending offer"+(pend.length===1?"":"s"))+
+  return '<div class="page">'+demoBar()+subHead("My Offers",pend.length+" active pending offer"+(pend.length===1?"":"s"))+
   '<section class="balcard"><span class="tile" style="width:60px;height:60px;background:var(--card)">'+ic("gift",28)+'</span><div><div class="num tnum">'+pend.length+'</div><span class="muted">Pending Offers</span></div></section>'+
   '<button class="btn red" data-a="info" data-k="how">'+ic("play",18)+' How to Complete - Read Steps</button>'+
   '<button class="link" data-a="info" data-k="help"><span class="grow" style="flex:1"><b>Need help with offers?</b></span>'+ic("chev",20)+'</button>'+
   '<div class="warnbox"><b>Important Guidelines</b><ul><li>Only install the advertised app shown in the offer.</li><li>Wrong apps may cause withdrawal rejection.</li><li>Use the Remove button if you picked the wrong app.</li></ul></div>'+
-  (pend.length?pend.map(appCard).join(""):'<div class="note">No pending offers. Collect '+GEMS_NEEDED+' gems from Super or Mega Offer on Home to unlock one.</div>')+
+  (pend.length?pend.map(appCard).join(""):'<div class="note">No pending offers. Collect '+GEMS_NEEDED+' gems from the Super Offer on Home to unlock one.</div>')+
   (comp.length?'<h3>Completed</h3>'+comp.map(appCard).join(""):"")+'</div>';
 }
 function sOffer(){
@@ -598,12 +640,13 @@ function sOffer(){
     return '<div class="item"><div class="row"><span class="rank" style="'+(d?"background:var(--good-bg);color:var(--good)":"")+'">'+(d?ic("check",16):(i+1))+'</span><span>'+t+'</span></div></div>'}).join("");
   var act;
   if(o.claimed)act='<div class="note">Reward collected.</div>';
-  else if(!o.at)act='<button class="btn" data-a="install">Install app (demo)</button>';
-  else if(o.done<o.total)act='<button class="btn alt" data-a="nexttask">Mark next task done (demo)</button>';
+  else if(!DEMO)act='<div class="note">Install only the advertised app. Progress and coins are added after your offer partner verifies each step.</div>';
+  else if(!o.at)act='<button class="btn" data-a="install">DEMO: simulate install</button>';
+  else if(o.done<o.total)act='<button class="btn alt" data-a="nexttask">DEMO: simulate next task</button>';
   else act='<button class="btn coinb" data-a="claimapp">Claim '+fmt(o.coins)+' coins</button>';
   return '<div class="page">'+subHead(esc(o.app),"Finish all tasks to earn "+fmt(o.coins)+" coins")+
    '<section class="card"><div class="row between"><span class="muted">Progress</span><b class="tnum">'+o.done+'/'+o.total+' tasks</b></div><div class="bar"><i style="width:'+(o.done/o.total*100)+'%"></i></div><div>'+steps+'</div>'+act+
-   '<div class="note">Demo mode: in the live app, install and task progress are confirmed automatically by your offer partner. These buttons only simulate that.</div></section>'+
+   '<div class="note"><b>DEMO:</b> in a live app, install and task progress would be confirmed only by your offer partner. The DEMO buttons above just simulate that, so these coins are not real.</div></section>'+
    (o.claimed?"":'<button class="btn alt" data-a="rmapp" data-k="'+o.id+'">Remove this offer</button>')+'</div>';
 }
 function renderInfo(){
@@ -612,7 +655,7 @@ function renderInfo(){
   var t,items;
   if(INFO==="how"){
     t="How to complete an offer";
-    items=["Tap Super Offer or Mega Offer on Home.","Pick the correct number twice.","Watch the 2 or 3 ads to collect 1 gem.","Collect "+GEMS_NEEDED+" gems to unlock an app offer.","Open My Offers, install only the advertised app and finish every task.","When all tasks are done, tap Claim to get your coins."];
+    items=["Tap Super Offer on Home.","Pick the correct number twice.","Watch the 2 or 3 ads to collect 1 gem.","Collect "+GEMS_NEEDED+" gems to unlock an app offer.","Open My Offers, install only the advertised app and finish every task.","When all tasks are done, tap Claim to get your coins."];
   }else{
     t="Need help with offers?";
     items=["Install only the app shown in the offer.","Wrong apps may cause withdrawal rejection. Use Remove if you picked the wrong one.","Task progress can take a few minutes to update."];
@@ -651,6 +694,7 @@ document.addEventListener("click",function(e){
   else if(a==="refer"){sub="refer";render();window.scrollTo(0,0)}
   else if(a==="wdhist"){sub="wdhist";render();window.scrollTo(0,0)}
   else if(a==="brain")brain();
+  else if(a==="ffquiz")qStart("ff");
   else if(a==="offer")offerStart(k);
   else if(a==="offers"){C=null;sub="offers";render();window.scrollTo(0,0)}
   else if(a==="app"){AO=+k;sub="offer";render();window.scrollTo(0,0)}
