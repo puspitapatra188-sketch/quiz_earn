@@ -172,6 +172,7 @@ var AD_SECS=30, Q_LEN=5, Q_TIME=15, Q_COINS=10, Q_PERFECT=20, REFER=300, GEMS_NE
 // DEMO = true: every coin is a local test coin (stored only on this phone, not verified by a server) and the simulate buttons are shown.
 // A real release needs a server + offer partner to verify rewards. Do not ship with DEMO=true as a paid-rewards app.
 var DEMO=true;
+var DAILY_WIN=10;
 var OFFERS={super:{n:"Super Offer",coins:850,tasks:7},mega:{n:"Mega Offer",coins:450,tasks:4}};
 var QS=[
 ["Bharat ki rajdhani kaunsi hai?",["Mumbai","New Delhi","Kolkata","Chennai"],1],
@@ -315,7 +316,7 @@ function pHome(){
     '<button class="pillbtn" data-a="tab" data-k="wallet">'+ic("wallet",18)+' Go to Wallet</button></section>'+
   '<div class="grid2">'+
     '<button class="mini" data-a="refer"><div class="row"><span class="ico p">'+ic("gift",22)+'</span><b>Refer &amp; Earn</b></div><span class="sub">'+coin(18)+' '+REFER+' per friend</span></button>'+
-    '<button class="mini" data-a="daily"><div class="row"><span class="ico o">'+ic("star",22)+'</span><b>Daily Win</b></div><span class="sub">'+coin(18)+' '+(d.win?"Claimed today":"upto 200")+'</span></button>'+
+    '<button class="mini" data-a="daily"><div class="row"><span class="ico o">'+ic("star",22)+'</span><b>Daily Win</b></div><span class="sub">'+coin(18)+' '+(d.win?"Claimed today":DAILY_WIN+" coins")+'</span></button>'+
   '</div>'+
   '<div class="grid2">'+
     '<section class="offer b"><span class="tag">'+ic("sparkle",12)+' Super offer</span><small>Complete '+GEMS_NEEDED+' gems ('+gs+'/'+GEMS_NEEDED+')</small><div class="big tnum">'+fmt(OFFERS.super.coins)+'</div><small>Coins</small>'+
@@ -579,7 +580,7 @@ function brain(){showAd("Brain Buster","Start playing",function(){qStart("bb")})
 function dailyWin(){
   var d=day();
   if(d.win){toast("Already claimed. Come back tomorrow.");return}
-  var c=20+Math.floor(Math.random()*181);d.win=true;add(c,"Daily Win");render();toast("Daily Win: +"+c+" coins");
+  var c=DAILY_WIN;d.win=true;add(c,"Daily Win");render();toast("Daily Win: +"+c+" coins");
 }
 function genNum(){return String(1000+Math.floor(Math.random()*9000))}
 function similar(n){
@@ -691,7 +692,9 @@ function goBack(){
   if(sub){stopTimer();Q=null;C=null;if(sub==="gift"){R.k=null;R.done=null;sub=null}else sub=(sub==="offer")?"offers":null;return}
   if(page!=="home")page="home";
 }
+var NATIVE_BACK=false;
 function syncHistory(){
+  if(NATIVE_BACK)return;
   try{
     if(deep()&&!pushed){history.pushState({q:1},"");pushed=true}
     else if(!deep()&&pushed){pushed=false;skipPop=true;history.back()}
@@ -780,6 +783,16 @@ document.addEventListener("input",function(e){
   }else if(id==="p-name")PF.name=v;
 });
 initAds();
+try{
+  var CA=window.Capacitor&&Capacitor.Plugins&&Capacitor.Plugins.App;
+  if(CA&&CA.addListener){
+    NATIVE_BACK=true;
+    CA.addListener("backButton",function(){
+      if(deep()){goBack();render();window.scrollTo(0,0)}
+      else if(CA.exitApp)CA.exitApp();
+    });
+  }
+}catch(e){}
 render();
 })();
 </script>
