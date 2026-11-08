@@ -219,6 +219,8 @@ var MM=[
  {k:"myntra",n:"Myntra",min:1200,val:10,kind:"email",ic:"gift"},
  {k:"bank",n:"Bank transfer",min:6500,val:50,kind:"bank",ic:"bank"}
 ];
+var GIFTS=[10,30,50,100,200,300,500,700,1000,2000];
+function giftCost(m,x){return Math.round(m.min/m.val*x)}
 var MAP={};MM.forEach(function(m){MAP[m.k]=m});
 var BOARD=[]; // sample players removed: a real leaderboard needs a server
 
@@ -321,8 +323,7 @@ function pHome(){
     '<section class="offer a"><span class="tag">'+ic("game",12)+' Free Fire Quiz</span><small>'+(S.ff?"Reward collected":FFQ.length+" questions · answer all correctly")+'</small><div class="big tnum">'+fmt(FF_COINS)+'</div><small>Coins</small>'+
       '<button class="go" data-a="ffquiz">'+(S.ff?"Play again":"Play Now")+' '+ic("chev",16)+'</button></section>'+
   '</div>'+
-  '<div class="grid2">'+
-    '<button class="mini" data-a="tab" data-k="tasks"><div class="row"><span class="tile sm">'+ic("tasks",20)+'</span><b>Tasks</b></div><span class="sub">'+coin(18)+' Daily tasks</span></button>'+
+  '<div class="grid2" style="grid-template-columns:1fr">'+
     '<button class="mini" data-a="tab" data-k="comm"><div class="row"><span class="tile sm">'+ic("trend",20)+'</span><b>Rank</b></div><span class="sub">'+coin(18)+' Leaderboard</span></button>'+
   '</div>'+
   '<button class="link" data-a="offers"><span class="tile">'+ic("gift",24)+'</span><span class="grow" style="flex:1"><b style="font-size:16px">My Offers</b><br><span class="muted">'+pending()+' pending</span></span>'+ic("chev",20)+'</button>'+
@@ -462,7 +463,7 @@ function sQuiz(){
 function valLabel(m,x){return m.unit==="UC"?(m.val*x)+" UC":"₹"+(m.val*x)}
 function renderSheet(){renderInfo();
   var el=document.getElementById("sheet");
-  if(!R.k){el.innerHTML="";return}
+  if(!R.k||sub==="gift"){el.innerHTML="";return}
   var m=MAP[R.k],F=function(id){return esc(R.f[id]||"")},body;
   if(R.done){
     body='<div class="row" style="gap:14px"><span class="tile" style="background:var(--good-bg);color:var(--good)">'+ic("check",26)+'</span><div><h3>Request submitted</h3><span class="muted">'+esc(R.done.label)+' via '+esc(m.n)+'</span></div></div>'+
@@ -486,20 +487,37 @@ function renderSheet(){renderInfo();
   }
   el.innerHTML='<div class="scrim" data-a="sheetbg"><div class="sheet" role="dialog" aria-label="Withdraw">'+body+'</div></div>';
 }
+function sGift(){
+  var m=MAP[R.k];if(!m)return"";
+  var head=subHead(esc(m.n)+" Gift Card","Demo: nothing is actually sent");
+  if(R.done)return '<div class="page">'+head+'<section class="card" style="align-items:center;text-align:center"><span class="tile" style="background:var(--good-bg);color:var(--good)">'+ic("check",26)+'</span><h3>Request submitted</h3><p class="muted">'+esc(R.done.label)+' via '+esc(m.n)+'. It shows as Pending in Withdrawal History (24-48 hours). Demo mode: nothing is actually sent.</p><button class="btn" data-a="giftdone">Done</button></section></div>';
+  var cards=GIFTS.map(function(x){var c=giftCost(m,x),ok=S.coins>=c,sel=R.amt===x;
+    return '<button class="chip gcard" data-a="giftamt" data-k="'+x+'" aria-pressed="'+sel+'"><b style="font-size:20px">₹'+x+'</b><small class="tnum">'+fmt(Math.min(S.coins,c))+'/'+fmt(c)+'</small><div class="bar" style="height:6px;margin-top:6px"><i style="width:'+Math.min(100,S.coins/c*100)+'%"></i></div></button>'}).join("");
+  var cost=giftCost(m,R.amt),enough=S.coins>=cost;
+  return '<div class="page">'+head+
+   '<section class="balcard"><span class="tile">'+coin(30)+'</span><div><span class="muted">Balance</span><div class="num tnum">'+fmt(S.coins)+'</div></div></section>'+
+   '<h3>Gift Cards</h3><div class="mgrid">'+cards+'</div>'+
+   '<label for="f-email">Enter your Email Address<input id="f-email" type="email" inputmode="email" autocomplete="email" value="'+esc(R.f["f-email"]||"")+'" placeholder="your.email@gmail.com"></label>'+
+   '<p class="muted" style="font-size:13px">₹'+R.amt+' '+esc(m.n)+' gift card code will be sent to this email</p>'+
+   (R.err?'<p class="err" role="alert">'+esc(R.err)+'</p>':"")+
+   (enough?"":'<div class="note">You need '+fmt(cost-S.coins)+' more coins for ₹'+R.amt+'.</div>')+
+   '<button class="btn" data-a="wdsubmit" '+(enough?"":"disabled")+'>Redeem Now</button>'+
+   '<div class="note">Demo mode: no real gift card is sent.</div></div>';
+}
 function wdSubmit(){
-  var m=MAP[R.k],f=R.f,cost=m.min*R.mult,dest="";R.err="";
-  if(S.coins<cost){R.err="Not enough coins.";return renderSheet()}
+  var m=MAP[R.k],f=R.f,cost=R.amt?giftCost(m,R.amt):m.min*R.mult,dest="";R.err="";
+  if(S.coins<cost){R.err="Not enough coins.";return render()}
   var v=function(id){return(f[id]||"").trim()};
-  if(m.kind==="email"){if(!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v("f-email"))){R.err="Enter a valid email address.";return renderSheet()}dest=v("f-email")}
-  if(m.kind==="upi"){if(!/^[\w.\-]{2,}@[a-zA-Z]{2,}$/.test(v("f-upi"))){R.err="Enter a valid UPI ID, like name@bank.";return renderSheet()}dest=v("f-upi")}
-  if(m.kind==="pid"){if(!/^\d{8,12}$/.test(v("f-pid"))){R.err="Player ID should be 8 to 12 digits.";return renderSheet()}dest="ID "+v("f-pid")}
+  if(m.kind==="email"){if(!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v("f-email"))){R.err="Enter a valid email address.";return render()}dest=v("f-email")}
+  if(m.kind==="upi"){if(!/^[\w.\-]{2,}@[a-zA-Z]{2,}$/.test(v("f-upi"))){R.err="Enter a valid UPI ID, like name@bank.";return render()}dest=v("f-upi")}
+  if(m.kind==="pid"){if(!/^\d{8,12}$/.test(v("f-pid"))){R.err="Player ID should be 8 to 12 digits.";return render()}dest="ID "+v("f-pid")}
   if(m.kind==="bank"){
-    if(!v("f-bname")){R.err="Enter the account holder name.";return renderSheet()}
-    if(!/^\d{9,18}$/.test(v("f-acc"))){R.err="Account number must be 9 to 18 digits.";return renderSheet()}
-    if(!/^[A-Z]{4}0[A-Z0-9]{6}$/.test(v("f-ifsc").toUpperCase())){R.err="Invalid IFSC. Example: SBIN0001234";return renderSheet()}
+    if(!v("f-bname")){R.err="Enter the account holder name.";return render()}
+    if(!/^\d{9,18}$/.test(v("f-acc"))){R.err="Account number must be 9 to 18 digits.";return render()}
+    if(!/^[A-Z]{4}0[A-Z0-9]{6}$/.test(v("f-ifsc").toUpperCase())){R.err="Invalid IFSC. Example: SBIN0001234";return render()}
     dest="••••"+v("f-acc").slice(-4)+" · "+v("f-bname");
   }
-  var label=valLabel(m,R.mult);
+  var label=R.amt?"₹"+R.amt:valLabel(m,R.mult);
   S.wd.unshift({t:Date.now(),name:m.n,label:label,coins:cost,dest:dest,status:"Pending"});
   add(-cost,"Withdrawal: "+m.n+" "+label);
   R.done={label:label};R.f={};render();
@@ -649,7 +667,7 @@ function sOffer(){
    '<div class="note"><b>DEMO:</b> in a live app, install and task progress would be confirmed only by your offer partner. The DEMO buttons above just simulate that, so these coins are not real.</div></section>'+
    (o.claimed?"":'<button class="btn alt" data-a="rmapp" data-k="'+o.id+'">Remove this offer</button>')+'</div>';
 }
-function renderInfo(){
+function renderInfo(){syncHistory();
   var el=document.getElementById("info");
   if(!INFO){el.innerHTML="";return}
   var t,items;
@@ -665,6 +683,24 @@ function renderInfo(){
 }
 
 /* ---------- Render ---------- */
+var pushed=false,skipPop=false;
+function deep(){return !!(sub||page!=="home"||INFO||R.k)}
+function goBack(){
+  if(INFO){INFO=null;return}
+  if(R.k&&sub!=="gift"){R.k=null;R.done=null;return}
+  if(sub){stopTimer();Q=null;C=null;if(sub==="gift"){R.k=null;R.done=null;sub=null}else sub=(sub==="offer")?"offers":null;return}
+  if(page!=="home")page="home";
+}
+function syncHistory(){
+  try{
+    if(deep()&&!pushed){history.pushState({q:1},"");pushed=true}
+    else if(!deep()&&pushed){pushed=false;skipPop=true;history.back()}
+  }catch(x){}
+}
+window.addEventListener("popstate",function(){
+  if(skipPop){skipPop=false;return}
+  pushed=false;goBack();render();window.scrollTo(0,0);
+});
 function render(){
   var body;
   if(sub==="quiz")body=sQuiz();
@@ -673,14 +709,16 @@ function render(){
   else if(sub==="offer")body=sOffer();
   else if(sub==="wdhist")body=sWdHist();
   else if(sub==="refer")body=sRefer();
+  else if(sub==="gift")body=sGift();
   else body=({home:pHome,tasks:pTasks,comm:pComm,wallet:pWallet,profile:pProfile})[page]();
   document.getElementById("view").innerHTML=body;
   var nav=document.getElementById("nav");
-  nav.hidden=sub==="quiz"||sub==="cap";
-  var T=[["home","Home","home"],["tasks","Tasks","tasks"],["comm","Community","trend"],["wallet","Wallet","wallet"],["profile","Profile","user"]];
+  nav.hidden=sub==="quiz"||sub==="cap"||sub==="gift";
+  var T=[["home","Home","home"],["comm","Community","trend"],["wallet","Wallet","wallet"],["profile","Profile","user"]];
   nav.innerHTML='<div>'+T.map(function(t){
-    return '<button class="tab" data-a="tab" data-k="'+t[0]+'" aria-current="'+(!sub&&page===t[0])+'"><span>'+ic(t[2],24)+'</span>'+t[1]+(t[0]==="tasks"&&claimable()?'<i class="dot"></i>':"")+'</button>'}).join("")+'</div>';
+    return '<button class="tab" data-a="tab" data-k="'+t[0]+'" aria-current="'+(!sub&&page===t[0])+'"><span>'+ic(t[2],24)+'</span>'+t[1]+""+'</button>'}).join("")+'</div>';
   renderSheet();
+  syncHistory();
 }
 
 /* ---------- Events ---------- */
@@ -689,7 +727,7 @@ document.addEventListener("click",function(e){
   var a=b.dataset.a,k=b.dataset.k;
   if((a==="sheetbg"||a==="infobg")&&e.target!==b)return;
   if(a==="tab"){stopTimer();Q=null;sub=null;page=k;PF.confirm=false;render();window.scrollTo(0,0)}
-  else if(a==="back"){stopTimer();Q=null;C=null;sub=(sub==="offer")?"offers":null;render();window.scrollTo(0,0)}
+  else if(a==="back"){goBack();render();window.scrollTo(0,0)}
   else if(a==="daily")dailyWin();
   else if(a==="refer"){sub="refer";render();window.scrollTo(0,0)}
   else if(a==="wdhist"){sub="wdhist";render();window.scrollTo(0,0)}
@@ -714,7 +752,9 @@ document.addEventListener("click",function(e){
   else if(a==="adclose")showAd.close(false);
   else if(a==="refresh"){render();toast("Balance updated")}
   else if(a==="country")toast("Only India is supported for now");
-  else if(a==="method"){R={k:k,mult:1,f:{},err:"",done:null};renderSheet()}
+  else if(a==="method"){R={k:k,mult:1,f:{},err:"",done:null,amt:0};if(MAP[k].kind==="email"){sub="gift";R.amt=GIFTS[0];render();window.scrollTo(0,0)}else renderSheet()}
+  else if(a==="giftamt"){R.amt=+k;R.err="";render()}
+  else if(a==="giftdone"){R.k=null;R.done=null;sub=null;render()}
   else if(a==="tier"){R.mult=+k;R.err="";renderSheet()}
   else if(a==="wdsubmit")wdSubmit();
   else if(a==="sheetclose"||a==="sheetbg"){R.k=null;R.done=null;renderSheet()}
